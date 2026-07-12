@@ -1,0 +1,168 @@
+{% extends "base.html" %}
+{% block title %}Career Roadmap{% endblock %}
+{% block content %}
+
+<!-- Page Header -->
+<div class="page-hero d-flex align-items-center gap-3">
+  <div style="font-size:2.5rem">🗺️</div>
+  <div>
+    <h1 class="mb-1">Career Roadmap</h1>
+    <p class="mb-0">
+      Personalised 30-day, 3-month, 6-month &amp; 1-year career plans
+      with milestones and income projections
+    </p>
+  </div>
+</div>
+
+<div class="row g-3">
+
+  <!-- ── Left: Controls ───────────────────────────────────────────── -->
+  <div class="col-lg-3">
+
+    <!-- Generate Options -->
+    <div class="glass p-3 mb-3">
+      <h6 class="fw-800 text-gradient mb-3">⚙️ Generate Plan</h6>
+      <div class="mb-3">
+        <label class="form-label">Select Horizon</label>
+        <select id="horizonSelect" class="form-select form-select-sm">
+          <option value="full">📅 Complete Roadmap (All)</option>
+          <option value="30_days">🗓️ 30-Day Quick Plan</option>
+          <option value="3_months">📆 3-Month Plan</option>
+          <option value="6_months">🗓️ 6-Month Plan</option>
+          <option value="1_year">🏆 1-Year Master Plan</option>
+        </select>
+      </div>
+      <button id="genRoadmapBtn" class="btn btn-gradient w-100">
+        🚀 Generate Roadmap
+      </button>
+    </div>
+
+    <!-- Horizon Quick Tabs -->
+    <div class="glass p-3 mb-3">
+      <h6 class="fw-800 text-gradient mb-2 fs-xs">⚡ QUICK SWITCH</h6>
+      <div class="d-flex flex-column gap-2 horizon-tabs">
+        <a href="#" class="nav-link active" data-horizon="full">📋 Full Plan</a>
+        <a href="#" class="nav-link" data-horizon="30_days">🗓️ 30 Days</a>
+        <a href="#" class="nav-link" data-horizon="3_months">📆 3 Months</a>
+        <a href="#" class="nav-link" data-horizon="6_months">🗓️ 6 Months</a>
+        <a href="#" class="nav-link" data-horizon="1_year">🏆 1 Year</a>
+      </div>
+    </div>
+
+    <!-- Income Tracker -->
+    <div class="glass p-3 mb-3">
+      <h6 class="fw-800 text-gradient mb-2 fs-xs">💰 INCOME GROWTH</h6>
+      <div class="d-flex flex-column gap-2 fs-xs">
+        <div class="d-flex justify-content-between">
+          <span class="text-muted">Current</span>
+          <span class="fw-700" id="incomeCurrentLabel">—</span>
+        </div>
+        <div class="progress">
+          <div class="progress-bar" style="width:20%"></div>
+        </div>
+        <div class="d-flex justify-content-between">
+          <span class="text-muted">6-Month Goal</span>
+          <span class="fw-700 text-gradient">AI Estimated</span>
+        </div>
+        <div class="progress">
+          <div class="progress-bar" style="width:60%"></div>
+        </div>
+        <div class="d-flex justify-content-between">
+          <span class="text-muted">1-Year Goal</span>
+          <span class="fw-700 text-gradient">AI Estimated</span>
+        </div>
+        <div class="progress">
+          <div class="progress-bar" style="width:85%"></div>
+        </div>
+      </div>
+      <p class="fs-xs text-muted mt-2 mb-0">
+        Income projections are estimates based on typical outcomes for your profile.
+      </p>
+    </div>
+
+    <!-- Save + Share -->
+    <div class="glass p-3">
+      <h6 class="fw-800 text-gradient mb-2 fs-xs">📤 ACTIONS</h6>
+      <div class="d-flex flex-column gap-2">
+        <button id="saveCareerBtn" class="btn btn-glass btn-sm d-none">
+          💾 Save Roadmap
+        </button>
+        <a href="/mentor/" class="btn btn-glass btn-sm text-start">
+          🤖 Ask Mentor for Help
+        </a>
+        <a href="/schemes/" class="btn btn-glass btn-sm text-start">
+          🏛️ Schemes to Apply
+        </a>
+        <a href="/skills/" class="btn btn-glass btn-sm text-start">
+          📚 Skills to Learn
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Right: Roadmap Display ────────────────────────────────────── -->
+  <div class="col-lg-9">
+
+    <!-- Stats Row -->
+    <div class="row g-2 mb-3 stagger">
+      <div class="col-3">
+        <div class="glass stat-card">
+          <div class="stat-icon">🗓️</div>
+          <div class="stat-value text-gradient">30d</div>
+          <div class="stat-label">Quick Plan</div>
+        </div>
+      </div>
+      <div class="col-3">
+        <div class="glass stat-card">
+          <div class="stat-icon">📆</div>
+          <div class="stat-value text-gradient">3m</div>
+          <div class="stat-label">Mid Plan</div>
+        </div>
+      </div>
+      <div class="col-3">
+        <div class="glass stat-card">
+          <div class="stat-icon">🗓️</div>
+          <div class="stat-value text-gradient">6m</div>
+          <div class="stat-label">Growth Plan</div>
+        </div>
+      </div>
+      <div class="col-3">
+        <div class="glass stat-card">
+          <div class="stat-icon">🏆</div>
+          <div class="stat-value text-gradient">1yr</div>
+          <div class="stat-label">Master Plan</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- AI Result Box -->
+    <div id="careerResult" class="ai-result glass">
+      <div class="text-center text-muted py-4">
+        <div style="font-size:2rem">🗺️</div>
+        <p class="mt-2 mb-0">Generating your personalised career roadmap…</p>
+      </div>
+    </div>
+
+    <!-- Disclaimer -->
+    <div class="glass-sm p-3 mt-3 fs-xs text-muted">
+      📊 <strong>Note:</strong> Income projections and timelines are AI estimates based on
+      typical outcomes for workers with your profile. Actual results depend on effort,
+      local market conditions, and individual circumstances.
+      Use this as a guide, not a guarantee.
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+{% block scripts %}
+<script>
+  document.body.dataset.page = "career";
+
+  // Show current income in sidebar
+  (function() {
+    const p = Profile.load();
+    const el = document.getElementById("incomeCurrentLabel");
+    if (el) el.textContent = p.income_current ? `₹${p.income_current}/mo` : "Not set";
+  })();
+</script>
+{% endblock %}

@@ -1,0 +1,228 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% set page_id = "index" %}
+{% block content %}
+
+<!-- ── Hero Section ─────────────────────────────────────────────── -->
+<section class="hero-section row align-items-center g-4">
+  <div class="col-lg-7 animate-fadeup">
+    <div class="d-flex align-items-center gap-2 mb-3">
+      <span class="badge-gradient">🇮🇳 Made for India's Workforce</span>
+    </div>
+    <h1 class="hero-title mb-3">
+      Your AI Career Guide<br>for a Better Tomorrow
+    </h1>
+    <p class="hero-subtitle mb-4">
+      FutureMentor helps daily wage workers, artisans, gig workers, and rural
+      job seekers discover better livelihood opportunities through personalised
+      AI guidance — in your own language.
+    </p>
+    <div class="d-flex flex-wrap gap-3">
+      <a href="/mentor/" class="btn btn-gradient btn-lg d-flex align-items-center gap-2">
+        🤖 Chat with AI Mentor
+      </a>
+      <button class="btn btn-glass btn-lg d-flex align-items-center gap-2"
+              data-bs-toggle="modal" data-bs-target="#profileModal">
+        👤 Set Up Profile
+      </button>
+    </div>
+    <div class="mt-4 d-flex flex-wrap gap-2">
+      <span class="badge glass-sm px-3 py-2 fs-xs">🗣️ Hindi • Tamil • Telugu +8 languages</span>
+      <span class="badge glass-sm px-3 py-2 fs-xs">🎤 Voice Input</span>
+      <span class="badge glass-sm px-3 py-2 fs-xs">📴 Offline Access</span>
+      <span class="badge glass-sm px-3 py-2 fs-xs">🆓 Completely Free</span>
+    </div>
+  </div>
+
+  <div class="col-lg-5 animate-scalein" style="animation-delay:0.15s">
+    <!-- Quick Stats -->
+    <div class="glass p-4">
+      <div class="d-flex align-items-center gap-2 mb-3">
+        <span class="text-gradient fw-800 fs-5">📊 Today's Insights</span>
+      </div>
+      <div class="row g-3 stagger">
+        <div class="col-6">
+          <div class="quick-stat glass-sm">
+            <div class="qs-num">13+</div>
+            <div class="qs-lbl">Govt Schemes</div>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="quick-stat glass-sm">
+            <div class="qs-num">6</div>
+            <div class="qs-lbl">Job Matches</div>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="quick-stat glass-sm">
+            <div class="qs-num">8</div>
+            <div class="qs-lbl">Free Courses</div>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="quick-stat glass-sm">
+            <div class="qs-num">4</div>
+            <div class="qs-lbl">Career Plans</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Daily Tip -->
+      <div class="mt-3 pt-3" style="border-top:1px solid var(--border)">
+        <div class="d-flex align-items-center gap-2 mb-2">
+          <span class="fw-700 fs-xs text-gradient">💡 DAILY TIP</span>
+          <button class="btn btn-sm btn-glass py-0 px-2 fs-xs" onclick="loadDailyTip()">
+            🔄 Refresh
+          </button>
+        </div>
+        <div id="dailyTipCard">
+          <p id="dailyTipText" class="mb-0">Loading your personalised tip…</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Feature Cards ─────────────────────────────────────────────── -->
+<section class="mt-5">
+  <h2 class="text-gradient fw-800 text-center mb-1">Everything You Need</h2>
+  <p class="text-center text-muted fs-xs mb-4">5 AI-powered tools to transform your career</p>
+
+  <div class="row g-3 stagger">
+
+    <!-- AI Mentor -->
+    <div class="col-sm-6 col-lg-4 observe-me">
+      <a href="/mentor/" class="feature-card glass p-4 text-decoration-none">
+        <div class="feature-icon" style="background:rgba(99,102,241,0.15)">🤖</div>
+        <h5 class="fw-800 mb-1" style="color:var(--text)">AI Mentor</h5>
+        <p class="text-muted fs-xs mb-2">
+          Chat in your language. Ask anything about jobs, skills, or schemes.
+          Voice input supported.
+        </p>
+        <span class="badge-gradient">Multi-language Chat</span>
+      </a>
+    </div>
+
+    <!-- Jobs -->
+    <div class="col-sm-6 col-lg-4 observe-me">
+      <a href="/jobs/" class="feature-card glass p-4 text-decoration-none">
+        <div class="feature-icon" style="background:rgba(16,185,129,0.15)">💼</div>
+        <h5 class="fw-800 mb-1" style="color:var(--text)">Jobs Dashboard</h5>
+        <p class="text-muted fs-xs mb-2">
+          Local jobs, gig work, government jobs, and self-employment opportunities
+          matched to your skills.
+        </p>
+        <span class="badge-gradient">AI Opportunity Score</span>
+      </a>
+    </div>
+
+    <!-- Skills -->
+    <div class="col-sm-6 col-lg-4 observe-me">
+      <a href="/skills/" class="feature-card glass p-4 text-decoration-none">
+        <div class="feature-icon" style="background:rgba(245,158,11,0.15)">📚</div>
+        <h5 class="fw-800 mb-1" style="color:var(--text)">Skills Dashboard</h5>
+        <p class="text-muted fs-xs mb-2">
+          AI skill gap analysis, free courses on PMKVY, Skill India, Google,
+          and YouTube.
+        </p>
+        <span class="badge-gradient">Free Learning Paths</span>
+      </a>
+    </div>
+
+    <!-- Schemes -->
+    <div class="col-sm-6 col-lg-4 observe-me">
+      <a href="/schemes/" class="feature-card glass p-4 text-decoration-none">
+        <div class="feature-icon" style="background:rgba(59,130,246,0.15)">🏛️</div>
+        <h5 class="fw-800 mb-1" style="color:var(--text)">Govt Schemes</h5>
+        <p class="text-muted fs-xs mb-2">
+          Verified central and state schemes — MUDRA, PMKVY, eShram, PM Vishwakarma
+          and more.
+        </p>
+        <span class="badge-gradient">Eligibility Check</span>
+      </a>
+    </div>
+
+    <!-- Career Roadmap -->
+    <div class="col-sm-6 col-lg-4 observe-me">
+      <a href="/career/" class="feature-card glass p-4 text-decoration-none">
+        <div class="feature-icon" style="background:rgba(239,68,68,0.15)">🗺️</div>
+        <h5 class="fw-800 mb-1" style="color:var(--text)">Career Roadmap</h5>
+        <p class="text-muted fs-xs mb-2">
+          Personalised 30-day, 3-month, 6-month, and 1-year career plans
+          with income projections.
+        </p>
+        <span class="badge-gradient">Income Growth Plan</span>
+      </a>
+    </div>
+
+    <!-- Profile Setup CTA -->
+    <div class="col-sm-6 col-lg-4 observe-me">
+      <div class="feature-card glass p-4 text-decoration-none"
+           style="cursor:pointer" data-bs-toggle="modal" data-bs-target="#profileModal">
+        <div class="feature-icon" style="background:rgba(139,92,246,0.15)">⚙️</div>
+        <h5 class="fw-800 mb-1" style="color:var(--text)">Set Up Profile</h5>
+        <p class="text-muted fs-xs mb-2">
+          Tell FutureMentor your skills, location, and goals for perfectly
+          personalised recommendations.
+        </p>
+        <span class="badge-gradient">Better Recommendations</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── How It Works ──────────────────────────────────────────────── -->
+<section class="mt-5 observe-me">
+  <div class="glass p-4">
+    <h3 class="text-gradient fw-800 text-center mb-4">How It Works</h3>
+    <div class="row g-3 text-center stagger">
+      <div class="col-6 col-md-3">
+        <div class="glass-sm p-3 h-100">
+          <div style="font-size:2rem">📝</div>
+          <div class="fw-700 mt-2 fs-xs">1. Set Your Profile</div>
+          <div class="text-muted fs-xs mt-1">Share your skills, location, education</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="glass-sm p-3 h-100">
+          <div style="font-size:2rem">🤖</div>
+          <div class="fw-700 mt-2 fs-xs">2. AI Analyses</div>
+          <div class="text-muted fs-xs mt-1">IBM Granite AI processes your profile</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="glass-sm p-3 h-100">
+          <div style="font-size:2rem">✨</div>
+          <div class="fw-700 mt-2 fs-xs">3. Get Recommendations</div>
+          <div class="text-muted fs-xs mt-1">Jobs, skills, schemes, roadmap</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="glass-sm p-3 h-100">
+          <div style="font-size:2rem">🚀</div>
+          <div class="fw-700 mt-2 fs-xs">4. Take Action</div>
+          <div class="text-muted fs-xs mt-1">Follow the plan, track progress</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Footer ────────────────────────────────────────────────────── -->
+<footer class="text-center py-4 mt-5">
+  <p class="text-muted fs-xs mb-1">
+    Powered by <strong>IBM watsonx.ai</strong> Granite Models &nbsp;|&nbsp;
+    Made with ❤️ for India's informal workers
+  </p>
+  <p class="text-muted fs-xs">
+    Helplines: Labour 14434 &nbsp;|&nbsp; NCS 1800-11-0001 &nbsp;|&nbsp; Fraud 1800-111-555
+  </p>
+</footer>
+
+{% endblock %}
+{% block scripts %}
+<script>
+  document.body.dataset.page = "index";
+</script>
+{% endblock %}

@@ -1,0 +1,151 @@
+{% extends "base.html" %}
+{% block title %}Jobs Dashboard{% endblock %}
+{% block content %}
+
+<!-- Page Header -->
+<div class="page-hero d-flex align-items-center gap-3">
+  <div style="font-size:2.5rem">💼</div>
+  <div>
+    <h1 class="mb-1">Jobs Dashboard</h1>
+    <p class="mb-0">
+      AI-matched local jobs, gig work, government jobs, and self-employment opportunities
+    </p>
+  </div>
+</div>
+
+<div class="row g-3">
+
+  <!-- ── Left: Filters ────────────────────────────────────────────── -->
+  <div class="col-lg-3">
+
+    <!-- Filter Form -->
+    <div class="glass p-3 mb-3">
+      <h6 class="fw-800 text-gradient mb-3">🎯 Filter Jobs</h6>
+      <form id="jobsFilterForm">
+        <div class="mb-3">
+          <label class="form-label">Work Type</label>
+          <select class="form-select form-select-sm" name="work_type">
+            <option value="">All Types</option>
+            <option value="full-time">Full-Time</option>
+            <option value="part-time">Part-Time</option>
+            <option value="gig">Gig / Daily Work</option>
+            <option value="self-employment">Self-Employment</option>
+            <option value="government">Government</option>
+            <option value="seasonal">Seasonal</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Sector</label>
+          <select class="form-select form-select-sm" name="sector">
+            <option value="">All Sectors</option>
+            <option value="construction">Construction</option>
+            <option value="agriculture">Agriculture</option>
+            <option value="manufacturing">Manufacturing</option>
+            <option value="services">Services</option>
+            <option value="retail">Retail / Trade</option>
+            <option value="transport">Transport</option>
+            <option value="healthcare">Healthcare</option>
+            <option value="education">Education</option>
+            <option value="technology">Technology</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Min. Income (₹/month)</label>
+          <input type="number" class="form-control form-control-sm"
+                 name="min_salary" placeholder="e.g. 10000" min="0">
+        </div>
+        <button id="getJobsBtn" type="button" class="btn btn-gradient w-100">
+          🔍 Find Jobs
+        </button>
+      </form>
+    </div>
+
+    <!-- Profile Summary -->
+    <div class="glass p-3">
+      <h6 class="fw-800 text-gradient mb-2">👤 Your Profile</h6>
+      <div id="jobsProfileSummary" class="fs-xs text-muted">
+        Loading profile…
+      </div>
+      <button class="btn btn-glass btn-sm w-100 mt-2"
+              data-bs-toggle="modal" data-bs-target="#profileModal">
+        ✏️ Update Profile
+      </button>
+    </div>
+  </div>
+
+  <!-- ── Right: Results ────────────────────────────────────────────── -->
+  <div class="col-lg-9">
+
+    <!-- Stats Row -->
+    <div class="row g-2 mb-3 stagger">
+      <div class="col-4">
+        <div class="glass stat-card">
+          <div class="stat-icon">💼</div>
+          <div class="stat-value text-gradient">6</div>
+          <div class="stat-label">Jobs Found</div>
+        </div>
+      </div>
+      <div class="col-4">
+        <div class="glass stat-card">
+          <div class="stat-icon">⚡</div>
+          <div class="stat-value text-gradient">AI</div>
+          <div class="stat-label">Matched</div>
+        </div>
+      </div>
+      <div class="col-4">
+        <div class="glass stat-card">
+          <div class="stat-icon">🌟</div>
+          <div class="stat-value text-gradient">Top</div>
+          <div class="stat-label">2 Starred</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Action bar -->
+    <div class="d-flex gap-2 mb-3">
+      <button id="saveJobsBtn" class="btn btn-glass btn-sm d-none">
+        💾 Save Recommendations
+      </button>
+      <span class="ms-auto fs-xs text-muted align-self-center">
+        Updated for your profile
+      </span>
+    </div>
+
+    <!-- AI Result Box -->
+    <div id="jobsResult" class="ai-result glass">
+      <div class="text-center text-muted py-4">
+        <div style="font-size:2rem">💼</div>
+        <p class="mt-2 mb-0">Loading personalised job recommendations…</p>
+      </div>
+    </div>
+
+    <!-- Info Banner -->
+    <div class="glass-sm p-3 mt-3 fs-xs text-muted">
+      ⚠️ <strong>Disclaimer:</strong> Job recommendations are AI-generated based on your profile.
+      Always verify job details with official sources before applying.
+      Never pay unofficial fees to get a job.
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+{% block scripts %}
+<script>
+  document.body.dataset.page = "jobs";
+
+  // Render profile summary in sidebar
+  (function() {
+    const p = Profile.load();
+    const el = document.getElementById("jobsProfileSummary");
+    if (el && p.name) {
+      el.innerHTML = `
+        <div><strong>Name:</strong> ${p.name}</div>
+        <div><strong>Occupation:</strong> ${p.occupation || 'Not set'}</div>
+        <div><strong>Location:</strong> ${p.location || 'Not set'}</div>
+        <div><strong>Skills:</strong> ${p.current_skills || 'Not set'}</div>
+        <div><strong>Education:</strong> ${p.education_level || 'Not set'}</div>
+      `;
+    }
+  })();
+</script>
+{% endblock %}

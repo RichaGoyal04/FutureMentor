@@ -1,0 +1,13 @@
+# ── IBM Cloud Foundry deployment ──────────────────────────────────
+# Deploy: ibmcloud cf push
+applications:
+  - name: futurementor
+    memory: 256M
+    instances: 1
+    buildpack: python_buildpack
+    command: gunicorn "app:create_app('production')" --workers 2 --threads 2 --bind 0.0.0.0:$PORT --timeout 120
+    env:
+      FLASK_ENV: production
+      # Set secrets via: ibmcloud cf set-env futurementor IBM_API_KEY yourkey
+      IBM_WATSONX_URL: https://us-south.ml.cloud.ibm.com
+      WATSONX_MODEL_ID: ibm/granite-4-h-small

@@ -1,0 +1,22 @@
+# ── Render.com deployment (free tier) ─────────────────────────────
+# Deploy: https://dashboard.render.com → New Web Service → Connect repo
+services:
+  - type: web
+    name: futurementor
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn "app:create_app('production')" --workers 2 --threads 2 --bind 0.0.0.0:$PORT --timeout 120
+    envVars:
+      - key: FLASK_ENV
+        value: production
+      - key: IBM_API_KEY
+        sync: false          # set manually in Render dashboard
+      - key: IBM_PROJECT_ID
+        sync: false          # set manually in Render dashboard
+      - key: IBM_WATSONX_URL
+        value: https://us-south.ml.cloud.ibm.com
+      - key: WATSONX_MODEL_ID
+        value: ibm/granite-4-h-small
+      - key: SECRET_KEY
+        generateValue: true  # Render generates a random secret
+    healthCheckPath: /health
