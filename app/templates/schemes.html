@@ -1,0 +1,169 @@
+{% extends "base.html" %}
+{% block title %}Government Schemes{% endblock %}
+{% block content %}
+
+<!-- Page Header -->
+<div class="page-hero d-flex align-items-center gap-3">
+  <div style="font-size:2.5rem">🏛️</div>
+  <div>
+    <h1 class="mb-1">Government Schemes</h1>
+    <p class="mb-0">
+      Verified central &amp; state schemes — eligibility check, documents, benefits,
+      and application steps
+    </p>
+  </div>
+</div>
+
+<!-- Warning Banner -->
+<div class="alert d-flex align-items-start gap-2 mb-3"
+     style="background:rgba(245,158,11,0.12);border:1px solid rgba(245,158,11,0.35);border-radius:var(--radius);color:var(--text)">
+  <span style="font-size:1.2rem">⚠️</span>
+  <div class="fs-xs">
+    <strong>Fraud Alert:</strong> Genuine government schemes NEVER charge unofficial
+    application fees, bribes, or agent commissions. All links provided are official government portals.
+    Report fraud: <strong>1800-111-555</strong>
+  </div>
+</div>
+
+<div class="row g-3">
+
+  <!-- ── Left: Filters ────────────────────────────────────────────── -->
+  <div class="col-lg-3">
+
+    <!-- Quick Category Filters -->
+    <div class="glass p-3 mb-3">
+      <h6 class="fw-800 text-gradient mb-3">🗂️ Category</h6>
+      <div class="d-flex flex-column gap-2">
+        <button class="btn btn-gradient btn-sm text-start scheme-filter-btn" data-category="">
+          🌟 All Schemes
+        </button>
+        <button class="btn btn-glass btn-sm text-start scheme-filter-btn" data-category="loan">
+          💰 Loans &amp; Finance
+        </button>
+        <button class="btn btn-glass btn-sm text-start scheme-filter-btn" data-category="skill">
+          📚 Skill Training
+        </button>
+        <button class="btn btn-glass btn-sm text-start scheme-filter-btn" data-category="employment">
+          💼 Employment
+        </button>
+        <button class="btn btn-glass btn-sm text-start scheme-filter-btn" data-category="insurance">
+          🛡️ Insurance &amp; Pension
+        </button>
+        <button class="btn btn-glass btn-sm text-start scheme-filter-btn" data-category="housing">
+          🏠 Housing
+        </button>
+        <button class="btn btn-glass btn-sm text-start scheme-filter-btn" data-category="agriculture">
+          🌾 Agriculture
+        </button>
+        <button class="btn btn-glass btn-sm text-start scheme-filter-btn" data-category="women">
+          👩 Women &amp; Self-Help
+        </button>
+      </div>
+    </div>
+
+    <!-- Dropdown Filter -->
+    <div class="glass p-3 mb-3">
+      <h6 class="fw-800 text-gradient mb-2">🔍 Search Schemes</h6>
+      <select id="schemeCategory" class="form-select form-select-sm mb-2">
+        <option value="">All Categories</option>
+        <option value="loan finance mudra">Loans &amp; Finance</option>
+        <option value="skill training pmkvy">Skill Training</option>
+        <option value="employment jobs">Employment</option>
+        <option value="insurance pension">Insurance &amp; Pension</option>
+        <option value="housing pmay">Housing</option>
+        <option value="agriculture farmer">Agriculture</option>
+        <option value="startup business">Startup &amp; Business</option>
+        <option value="women self help group">Women</option>
+        <option value="youth student">Youth &amp; Students</option>
+      </select>
+      <button id="getSchemesBtn" class="btn btn-gradient w-100 btn-sm">
+        🔍 Find Schemes
+      </button>
+    </div>
+
+    <!-- Known Schemes Quick Reference -->
+    <div class="glass p-3">
+      <h6 class="fw-800 text-gradient mb-2 fs-xs">📋 KEY SCHEMES</h6>
+      <div class="fs-xs text-muted d-flex flex-column gap-1">
+        <span>💳 MUDRA Loan (up to ₹10L)</span>
+        <span>🔨 PM Vishwakarma</span>
+        <span>🏪 PM SVANidhi</span>
+        <span>🎓 PMKVY Training</span>
+        <span>📱 eShram Card</span>
+        <span>🌾 MGNREGA</span>
+        <span>🌾 PM-KISAN</span>
+        <span>🛡️ PMSBY (₹2L insurance)</span>
+        <span>💼 Stand-Up India</span>
+        <span>🏭 PMEGP (business loan)</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Right: Results ────────────────────────────────────────────── -->
+  <div class="col-lg-9">
+
+    <!-- Stats Row -->
+    <div class="row g-2 mb-3 stagger">
+      <div class="col-4">
+        <div class="glass stat-card">
+          <div class="stat-icon">🏛️</div>
+          <div class="stat-value text-gradient">13+</div>
+          <div class="stat-label">Schemes</div>
+        </div>
+      </div>
+      <div class="col-4">
+        <div class="glass stat-card">
+          <div class="stat-icon">✅</div>
+          <div class="stat-value text-gradient">Verified</div>
+          <div class="stat-label">Official Only</div>
+        </div>
+      </div>
+      <div class="col-4">
+        <div class="glass stat-card">
+          <div class="stat-icon">📋</div>
+          <div class="stat-value text-gradient">Steps</div>
+          <div class="stat-label">How to Apply</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Action bar -->
+    <div class="d-flex gap-2 mb-3">
+      <button id="saveSchemesBtn" class="btn btn-glass btn-sm d-none">
+        💾 Save Recommendations
+      </button>
+      <span class="ms-auto fs-xs text-muted align-self-center">
+        Eligibility checked against your profile
+      </span>
+    </div>
+
+    <!-- AI Result Box -->
+    <div id="schemesResult" class="ai-result glass">
+      <div class="text-center text-muted py-4">
+        <div style="font-size:2rem">🏛️</div>
+        <p class="mt-2 mb-0">Loading verified government scheme recommendations…</p>
+      </div>
+    </div>
+
+    <!-- Official Links -->
+    <div class="glass-sm p-3 mt-3">
+      <p class="fw-700 fs-xs mb-2 text-gradient">🔗 OFFICIAL PORTALS</p>
+      <div class="d-flex flex-wrap gap-2 fs-xs">
+        <a href="https://www.myscheme.gov.in" target="_blank" class="btn btn-glass btn-sm">myscheme.gov.in</a>
+        <a href="https://www.mudra.org.in" target="_blank" class="btn btn-glass btn-sm">mudra.org.in</a>
+        <a href="https://eshram.gov.in" target="_blank" class="btn btn-glass btn-sm">eshram.gov.in</a>
+        <a href="https://pmvishwakarma.gov.in" target="_blank" class="btn btn-glass btn-sm">pmvishwakarma.gov.in</a>
+        <a href="https://pmsvanidhi.mohua.gov.in" target="_blank" class="btn btn-glass btn-sm">pmsvanidhi.gov.in</a>
+        <a href="https://pmegp.kvic.gov.in" target="_blank" class="btn btn-glass btn-sm">pmegp.kvic.gov.in</a>
+        <a href="https://skillindia.gov.in" target="_blank" class="btn btn-glass btn-sm">skillindia.gov.in</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+{% block scripts %}
+<script>
+  document.body.dataset.page = "schemes";
+</script>
+{% endblock %}

@@ -1,0 +1,156 @@
+{% extends "base.html" %}
+{% block title %}AI Mentor{% endblock %}
+{% block content %}
+
+<div class="row g-3">
+
+  <!-- ── Left: Chat Panel ──────────────────────────────────────────── -->
+  <div class="col-lg-8">
+
+    <!-- Hero Header -->
+    <div class="page-hero d-flex align-items-center gap-3 mb-3">
+      <div style="font-size:2.5rem">🤖</div>
+      <div>
+        <h1 class="mb-1">AI Mentor</h1>
+        <p class="mb-0">Ask me anything — jobs, skills, government schemes, career advice</p>
+      </div>
+    </div>
+
+    <!-- Chat Window -->
+    <div class="glass p-3 mb-3">
+      <div id="chatWindow" role="log" aria-live="polite" aria-label="Chat messages"></div>
+
+      <!-- Input row -->
+      <div class="d-flex gap-2 mt-3">
+        <button id="voiceBtn" class="btn btn-glass" title="Voice Input" aria-label="Voice input">
+          🎤
+        </button>
+        <input id="chatInput" type="text" class="form-control"
+               placeholder="Type your question here… (press Enter to send)"
+               aria-label="Chat input" autocomplete="off">
+        <button id="chatSend" class="btn btn-gradient px-4" aria-label="Send message">
+          Send ➤
+        </button>
+      </div>
+    </div>
+
+    <!-- Action bar -->
+    <div class="d-flex flex-wrap gap-2">
+      <button id="clearChat" class="btn btn-glass btn-sm">🗑️ Clear Chat</button>
+      <button id="saveChatBtn" class="btn btn-glass btn-sm">💾 Save Chat</button>
+      <span class="fs-xs text-muted align-self-center ms-auto">
+        🔒 Powered by IBM Granite AI
+      </span>
+    </div>
+
+    <!-- Quick prompts -->
+    <div class="mt-3">
+      <p class="fs-xs text-muted mb-2 fw-600">💬 QUICK QUESTIONS:</p>
+      <div class="d-flex flex-wrap gap-2" id="quickPrompts">
+        <button class="btn btn-glass btn-sm quick-prompt">
+          What jobs suit me near my location?
+        </button>
+        <button class="btn btn-glass btn-sm quick-prompt">
+          What skills should I learn to earn more?
+        </button>
+        <button class="btn btn-glass btn-sm quick-prompt">
+          Which government schemes can I apply for?
+        </button>
+        <button class="btn btn-glass btn-sm quick-prompt">
+          Create a 30-day career plan for me
+        </button>
+        <button class="btn btn-glass btn-sm quick-prompt">
+          How can I start my own small business?
+        </button>
+        <button class="btn btn-glass btn-sm quick-prompt">
+          How do I apply for MUDRA loan?
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Right: Profile & Info ─────────────────────────────────────── -->
+  <div class="col-lg-4">
+
+    <!-- Profile Card -->
+    <div class="glass p-3 mb-3" id="profileCard">
+      <div class="avatar">👤</div>
+      <h6 class="text-center fw-800 mb-0" id="profileBadge">Friend</h6>
+      <p class="text-center text-muted fs-xs mb-2">
+        <span id="profileOcc">Worker</span> · <span id="profileLocation">India</span>
+      </p>
+      <button class="btn btn-gradient w-100 btn-sm"
+              data-bs-toggle="modal" data-bs-target="#profileModal">
+        ✏️ Update Profile
+      </button>
+    </div>
+
+    <!-- Language Selector -->
+    <div class="glass p-3 mb-3">
+      <p class="fw-700 fs-xs mb-2 text-gradient">🗣️ CHAT LANGUAGE</p>
+      <select id="languageSelect" class="form-select form-select-sm"
+              onchange="Profile.save({preferred_language: this.value}); showToast('Language updated','success')">
+        <option>English</option>
+        <option>Hindi</option>
+        <option>Tamil</option>
+        <option>Telugu</option>
+        <option>Bengali</option>
+        <option>Marathi</option>
+        <option>Kannada</option>
+        <option>Malayalam</option>
+        <option>Gujarati</option>
+        <option>Punjabi</option>
+        <option>Odia</option>
+      </select>
+      <p class="fs-xs text-muted mt-2 mb-0">
+        AI replies in your selected language. Voice input also uses this language.
+      </p>
+    </div>
+
+    <!-- Navigation shortcuts -->
+    <div class="glass p-3 mb-3">
+      <p class="fw-700 fs-xs mb-2 text-gradient">🚀 QUICK NAVIGATION</p>
+      <div class="d-flex flex-column gap-2">
+        <a href="/jobs/"    class="btn btn-glass btn-sm text-start">💼 Find Jobs Near Me</a>
+        <a href="/skills/"  class="btn btn-glass btn-sm text-start">📚 Analyse My Skills</a>
+        <a href="/schemes/" class="btn btn-glass btn-sm text-start">🏛️ Govt Schemes for Me</a>
+        <a href="/career/"  class="btn btn-glass btn-sm text-start">🗺️ Career Roadmap</a>
+      </div>
+    </div>
+
+    <!-- Safety Note -->
+    <div class="glass-sm p-3">
+      <p class="fw-700 fs-xs mb-1 text-muted">⚠️ SAFETY REMINDER</p>
+      <p class="fs-xs text-muted mb-0">
+        Genuine government schemes NEVER charge unofficial fees or bribes.
+        <br><br>
+        Helplines:<br>
+        📞 Labour: <strong>14434</strong><br>
+        📞 NCS: <strong>1800-11-0001</strong><br>
+        📞 Fraud: <strong>1800-111-555</strong>
+      </p>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+{% block scripts %}
+<script>
+  document.body.dataset.page = "mentor";
+
+  // Quick prompt click → fill chat input
+  document.querySelectorAll(".quick-prompt").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const inp = document.getElementById("chatInput");
+      if (inp) { inp.value = btn.textContent.trim(); inp.focus(); }
+    });
+  });
+
+  // Sync language selector from profile
+  (function() {
+    const p = Profile.load();
+    const sel = document.getElementById("languageSelect");
+    if (sel && p.preferred_language) sel.value = p.preferred_language;
+  })();
+</script>
+{% endblock %}

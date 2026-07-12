@@ -1,0 +1,159 @@
+{% extends "base.html" %}
+{% block title %}Skills Dashboard{% endblock %}
+{% block content %}
+
+<!-- Page Header -->
+<div class="page-hero d-flex align-items-center gap-3">
+  <div style="font-size:2.5rem">📚</div>
+  <div>
+    <h1 class="mb-1">Skills Dashboard</h1>
+    <p class="mb-0">
+      AI skill gap analysis, free courses, certifications, and personalised learning paths
+    </p>
+  </div>
+</div>
+
+<div class="row g-3">
+
+  <!-- ── Left: Score + Resume ─────────────────────────────────────── -->
+  <div class="col-lg-3">
+
+    <!-- Opportunity Score -->
+    <div class="glass p-3 text-center mb-3">
+      <p class="fw-800 text-gradient fs-xs mb-3">⚡ OPPORTUNITY SCORE</p>
+      <div class="score-ring mx-auto" id="skillScoreRing" data-score="0">
+        <span>—</span>
+      </div>
+      <p class="fs-xs text-muted mt-3 mb-0">
+        Your current skills vs. market demand. Score updates after analysis.
+      </p>
+    </div>
+
+    <!-- Resume Check -->
+    <div class="glass p-3 mb-3">
+      <h6 class="fw-800 text-gradient mb-2">📄 Resume / Work History Check</h6>
+      <p class="fs-xs text-muted mb-2">
+        Paste your CV, bio, or describe your work experience. AI will suggest improvements.
+      </p>
+      <textarea id="resumeText" class="form-control mb-2" rows="5"
+                placeholder="Paste your resume or describe your work experience here…"
+                style="font-size:0.85rem"></textarea>
+      <button id="checkResumeBtn" class="btn btn-gradient w-100 btn-sm">
+        🔍 Analyse My Resume
+      </button>
+    </div>
+
+    <!-- Quick Links -->
+    <div class="glass p-3">
+      <h6 class="fw-800 text-gradient mb-2">🔗 Free Learning Platforms</h6>
+      <div class="d-flex flex-column gap-1 fs-xs">
+        <a href="https://www.skillindia.gov.in" target="_blank" class="btn btn-glass btn-sm text-start">
+          🇮🇳 Skill India Portal
+        </a>
+        <a href="https://pmkvyofficial.org" target="_blank" class="btn btn-glass btn-sm text-start">
+          📋 PMKVY
+        </a>
+        <a href="https://grow.google/intl/in_in/google-career-certificates/" target="_blank" class="btn btn-glass btn-sm text-start">
+          🔵 Google Certificates
+        </a>
+        <a href="https://learn.microsoft.com" target="_blank" class="btn btn-glass btn-sm text-start">
+          🔷 Microsoft Learn
+        </a>
+        <a href="https://diksha.gov.in" target="_blank" class="btn btn-glass btn-sm text-start">
+          📖 Diksha (NCERT)
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Right: Analysis Results ──────────────────────────────────── -->
+  <div class="col-lg-9">
+
+    <!-- Stats Row -->
+    <div class="row g-2 mb-3 stagger">
+      <div class="col-4">
+        <div class="glass stat-card">
+          <div class="stat-icon">💪</div>
+          <div class="stat-value text-gradient">AI</div>
+          <div class="stat-label">Gap Analysis</div>
+        </div>
+      </div>
+      <div class="col-4">
+        <div class="glass stat-card">
+          <div class="stat-icon">🎓</div>
+          <div class="stat-value text-gradient">Free</div>
+          <div class="stat-label">Courses</div>
+        </div>
+      </div>
+      <div class="col-4">
+        <div class="glass stat-card">
+          <div class="stat-icon">🏆</div>
+          <div class="stat-value text-gradient">Cert</div>
+          <div class="stat-label">Available</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tabs: Analysis + Resume Result -->
+    <ul class="nav nav-pills gap-2 mb-3 horizon-tabs flex-wrap" id="skillsTabs">
+      <li class="nav-item">
+        <a class="nav-link active" data-bs-toggle="pill" href="#tabAnalysis">
+          📊 Skill Analysis
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-bs-toggle="pill" href="#tabResume">
+          📄 Resume Check
+        </a>
+      </li>
+      <li class="ms-auto">
+        <button id="analyseSkillsBtn" class="btn btn-gradient btn-sm">
+          🔄 Re-analyse
+        </button>
+      </li>
+      <li>
+        <button id="saveSkillsBtn" class="btn btn-glass btn-sm d-none">
+          💾 Save
+        </button>
+      </li>
+    </ul>
+
+    <div class="tab-content">
+      <!-- Skill Analysis Tab -->
+      <div class="tab-pane fade show active" id="tabAnalysis">
+        <div id="skillsResult" class="ai-result glass">
+          <div class="text-center text-muted py-4">
+            <div style="font-size:2rem">📊</div>
+            <p class="mt-2 mb-0">Loading AI skill gap analysis…</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Resume Check Tab -->
+      <div class="tab-pane fade" id="tabResume">
+        <div id="resumeResult" class="ai-result glass">
+          <div class="text-center text-muted py-4">
+            <div style="font-size:2rem">📄</div>
+            <p class="mt-2 mb-0">
+              Paste your work history in the left panel and click "Analyse My Resume".
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Info Banner -->
+    <div class="glass-sm p-3 mt-3 fs-xs text-muted">
+      💡 All course recommendations prioritise <strong>free resources</strong>.
+      PMKVY provides government-certified training at no cost.
+      Certifications from Google and Microsoft are globally recognised.
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+{% block scripts %}
+<script>
+  document.body.dataset.page = "skills";
+</script>
+{% endblock %}
