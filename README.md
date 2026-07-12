@@ -25,11 +25,8 @@
 ```
 FutureMentor/
 ├── run.py                    ← Start the app
-├── diagnose.py               ← Debug credentials & connectivity
-├── restore.py                ← Regenerate all files if deleted
 ├── requirements.txt
 ├── .env                      ← Your credentials (never commit!)
-├── .env.example              ← Template
 ├── README.md
 └── app/
     ├── __init__.py           ← Flask app factory
@@ -60,78 +57,6 @@ FutureMentor/
 
 ---
 
-## 🚀 Quick Start
-
-### Step 1 — Install dependencies
-```bash
-pip install -r requirements.txt
-```
-
-### Step 2 — Set up IBM watsonx.ai
-1. **Create an IBM Cloud account** (free): https://cloud.ibm.com/registration
-2. **Get your API Key**: https://cloud.ibm.com/iam/apikeys → Create → Copy
-3. **Create a watsonx.ai project**: https://dataplatform.cloud.ibm.com/projects
-   - Click **New Project** → **Create an empty project**
-   - Go to **Manage → General** → Copy the **Project ID**
-4. **Activate Watson Machine Learning**:
-   - Go to https://cloud.ibm.com/resources
-   - Find **Watson Machine Learning** → Click **Activate**
-   - In your project → **Manage → Services & Integrations** → Associate WML
-
-### Step 3 — Configure credentials
-```bash
-cp .env.example .env
-```
-Edit `.env`:
-```env
-IBM_API_KEY=your_actual_api_key_here
-IBM_PROJECT_ID=your_actual_project_id_here
-IBM_WATSONX_URL=https://us-south.ml.cloud.ibm.com
-WATSONX_MODEL_ID=ibm/granite-3-8b-instruct
-SECRET_KEY=change-this-to-a-random-string
-```
-
-> ⚠️ **Region matters:** `ibm/granite-3-8b-instruct` is only available in `us-south` and `eu-de`. Use `https://us-south.ml.cloud.ibm.com` for best availability.
-
-### Step 4 — Diagnose (optional but recommended)
-```bash
-python diagnose.py
-```
-This checks: API key, IAM token, project ID, model availability, and does a live generation test.
-
-### Step 5 — Run
-```bash
-python run.py
-```
-Open: **http://localhost:5000**
-
----
-
-## ⚙️ Customising AI Behaviour
-
-Edit **`app/agent_instructions.py`** — this is the ONLY file you need to change:
-
-```python
-AGENT = {
-    "persona_name":    "FutureMentor",          # Change the AI's name
-    "tone":            "friendly-supportive",    # or "formal" | "casual"
-    "primary_language": "English",              # Default reply language
-    "supported_languages": ["Hindi", "Tamil",…],
-    "job_recommendation": {
-        "max_results": 6,                       # How many jobs to show
-        "include_gig": True,                    # Include gig work?
-    },
-    "schemes": {
-        "always_consider": ["MUDRA Loan", …],   # Schemes to check every time
-    },
-    "system_prompt": "…",                       # The master AI instruction
-}
-```
-
-No other file needs to change.
-
----
-
 ## 🔌 API Reference
 
 | Endpoint | Method | Description |
@@ -146,62 +71,6 @@ No other file needs to change.
 | `/schemes/api/recommendations` | GET/POST | Govt scheme recommendations |
 | `/career/api/roadmap` | GET/POST | `{horizon}` → `{roadmap}` |
 | `/health` | GET | Health check |
-
----
-
-## 🌐 Deployment
-
-### Local (development)
-```bash
-python run.py
-```
-
-### Production with Gunicorn
-```bash
-pip install gunicorn
-gunicorn -w 2 -b 0.0.0.0:8000 "app:create_app('production')"
-```
-
-### IBM Code Engine / Cloud Foundry
-```bash
-# Set environment variables in IBM Cloud dashboard, then deploy
-ibmcloud cf push futurementor -b python_buildpack
-```
-
-### Docker
-```dockerfile
-FROM python:3.11-slim
-WORKDIR /app
-COPY requirements.txt .
-RUN pip install -r requirements.txt
-COPY . .
-EXPOSE 5000
-CMD ["gunicorn", "-w", "2", "-b", "0.0.0.0:5000", "app:create_app('production')"]
-```
-
----
-
-## 🔒 Security
-
-- IBM API key stored in `.env` only — never hardcoded
-- `.env` listed in `.gitignore`
-- IAM token cached in memory (never exposed to frontend)
-- Session data stored server-side
-- All user input sanitised before sending to AI
-
----
-
-## 🛠️ Troubleshooting
-
-| Problem | Solution |
-|---------|----------|
-| "Project ID not found" | Run `python diagnose.py` to see your valid Project IDs |
-| "WML service inactive" | Activate at https://cloud.ibm.com/resources |
-| "Model not available" | Use `us-south` region or change `WATSONX_MODEL_ID` |
-| "API key invalid" | Renew at https://cloud.ibm.com/iam/apikeys |
-| Blank AI responses | Check `.env` is configured and app is restarted |
-
-For full diagnosis: `python diagnose.py`
 
 ---
 
