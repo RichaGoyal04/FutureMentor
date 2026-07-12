@@ -1,11 +1,12 @@
-"""app/config.py — All config loaded from .env"""
+"""app/config.py — All config loaded from .env (local) or platform env vars (Render/cloud)"""
 import os
 from dotenv import load_dotenv
 
-# override=True ensures .env always wins over any pre-existing env vars
-# encoding='utf-8-sig' handles Windows BOM-encoded files
+# Only load .env file if it actually exists on disk (local development).
+# On Render/cloud, env vars are injected directly — load_dotenv is skipped.
 _env_path = os.path.join(os.path.dirname(__file__), "..", ".env")
-load_dotenv(_env_path, override=True, encoding="utf-8-sig")
+if os.path.exists(_env_path):
+    load_dotenv(_env_path, override=False, encoding="utf-8-sig")
 
 
 class Config:
