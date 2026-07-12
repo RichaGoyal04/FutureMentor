@@ -1,1 +1,1 @@
-web: gunicorn "app:create_app('production')" --workers 2 --threads 2 --bind 0.0.0.0:$PORT --timeout 120 --access-logfile - --error-logfile -
+web: gunicorn wsgi:app --workers 2 --threads 2 --bind 0.0.0.0:$PORT --timeout 120 --access-logfile - --error-logfile -

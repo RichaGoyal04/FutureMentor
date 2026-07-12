@@ -5,7 +5,7 @@ services:
     name: futurementor
     runtime: python
     buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn "app:create_app('production')" --workers 2 --threads 2 --bind 0.0.0.0:$PORT --timeout 120
+    startCommand: gunicorn wsgi:app --workers 2 --threads 2 --bind 0.0.0.0:$PORT --timeout 120
     envVars:
       - key: FLASK_ENV
         value: production
